@@ -2,6 +2,11 @@ import React, {
 	Component
 } from 'react'
 import Borard from './Borard'
+import './reducer'
+import {
+	Provider
+} from 'react-redux'
+
 export default class App extends Component {
 	constructor() {
 		super()
