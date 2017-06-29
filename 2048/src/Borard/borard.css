@@ -1,0 +1,8 @@
+.borard{
+	height: 520px;
+	width: 400px;
+	margin: 0 auto;
+	background-color: red;
+	position: relative;
+	box-shadow: 0 0 10px rgba(0,0,0,0.9)
+}
