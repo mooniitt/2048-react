@@ -2,6 +2,9 @@ import React, {
 	Component
 } from 'react'
 import {
+	bindActionCreators
+} from 'redux'
+import {
 	connect
 } from 'react-redux'
 import './restart.css'
@@ -21,10 +24,13 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
+	const reducer = () => ({
+		type: "SUM"
+	})
+	let bind = bindActionCreators(reducer, dispatch)
+
 	return {
-		score: () => dispatch({
-			type: 'SUM'
-		})
+		score: bind
 	}
 }
 
