@@ -6,12 +6,11 @@ import {
 	Provider
 } from 'react-redux'
 import registerServiceWorker from './registerServiceWorker'
-import Store from './reducer'
-import Count from './Count'
+import Store from './reducer.js'
 
 ReactDOM.render(
 	<Provider store={Store}>
-   		<Count />
+   		<App />
   	</Provider>,
 	document.getElementById('root')
 )

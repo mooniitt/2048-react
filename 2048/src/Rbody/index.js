@@ -1,27 +1,18 @@
 import React, {
 	Component
 } from 'react'
+import {
+	connect
+} from 'react-redux'
 import './body.css'
 import Rrect from '../Rrect'
 
-export default class Rbody extends Component {
+class Rbody extends Component {
+	componentDidMount() {
+		console.log(this.props.data)
+	}
 	render() {
-		var data = [
-			[
-				'300px', //left
-				'300px', //top
-				'#F2EEE3', //color
-				16, //number
-				0 //id
-			],
-			[
-				'200px',
-				'100px',
-				'#BAAF92',
-				4, 1
-			]
-		]
-		var Rect = data.sort((prev, cur) => {
+		var Rect = this.props.data.sort((prev, cur) => {
 			return parseInt(prev[4], 10) - parseInt(cur[4], 10)
 		}).map(item => {
 			return (
@@ -30,9 +21,17 @@ export default class Rbody extends Component {
 			)
 		})
 		return (
-			<div className="body" >
+			<div className="body">
 				{Rect}
 			</div>
 		)
 	}
 }
+
+const mapStateToProps = (state) => {
+	return {
+		data: state.data
+	}
+}
+
+export default connect(mapStateToProps)(Rbody)

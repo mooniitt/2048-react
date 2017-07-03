@@ -1,9 +1,12 @@
 import React, {
 	Component
 } from 'react'
+import {
+	connect
+} from 'react-redux'
 import Borard from './Borard'
 
-export default class App extends Component {
+class App extends Component {
 	constructor(props) {
 		super(props)
 		this.control = this.control.bind(this)
@@ -14,32 +17,31 @@ export default class App extends Component {
 			switch (code) {
 				case 38: // 上
 				case 87:
-					// this.$store.dispatch("onUp")
+					this.props.up()
 					console.log("up")
 					break
 				case 40: // 下
 				case 83:
-					// this.$store.dispatch("onDown")
+					this.props.down()
 					console.log("down")
 					break
 				case 37: // 左
 				case 65:
-					// this.$store.dispatch("onLeft")
+					this.props.left()
 					console.log("left")
 					break
 				case 39: // 右
 				case 68:
-					// this.$store.dispatch("onRight")
+					this.props.right()
 					console.log("right")
 					break
 				case 82:
 					console.log("restart")
-						// this.$store.commit('restart')
 					break
 				default:
 					break
 			}
-			// this.$store.commit('score')
+			this.props.score()
 		})
 	}
 	componentDidMount() {
@@ -52,3 +54,29 @@ export default class App extends Component {
 		)
 	}
 }
+const mapStateToProps = (state) => {
+	return {}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		up: () => dispatch({
+			type: 'onUp'
+		}),
+		down: () => dispatch({
+			type: 'onDown'
+		}),
+		left: () => dispatch({
+			type: 'onLeft'
+		}),
+		right: () => dispatch({
+			type: 'onRight'
+		}),
+		score: () => dispatch({
+			type: 'SUM'
+		})
+	}
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

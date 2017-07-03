@@ -31,6 +31,7 @@ function update(data) {
 	for (var i = 0; i < data.length; i++) {
 		data.splice(i, 1, data[i])
 	}
+	return data
 }
 
 function _left(state, row) {
@@ -175,8 +176,8 @@ function _right(state, row) {
 
 function _up(state, row) {
 	var arr = []
-	state.removeId = []
-	state.newBlock = []
+		// state.removeId = []
+		// state.newBlock = []
 	for (var i in row) {
 		row[i].sort((prev, cur) => {
 			return parseInt(prev[1]) - parseInt(cur[1])
@@ -189,20 +190,20 @@ function _up(state, row) {
 			case 2:
 				if (_row[0][3] == _row[1][3]) {
 					_row[1][1] = "0px"
-					state.removeId.push(_row[0][4], _row[1][4])
-					state.newBlock.push(block(_row[0][0], _row[0][1], _row[0][3]))
+						// state.removeId.push(_row[0][4], _row[1][4])
+						// state.newBlock.push(block(_row[0][0], _row[0][1], _row[0][3]))
 				}
 				break
 			case 3:
 				if (_row[0][3] == _row[1][3]) {
 					_row[1][1] = "0px"
 					_row[2][1] = "100px"
-					state.removeId.push(_row[0][4], _row[1][4])
-					state.newBlock.push(block(_row[0][0], _row[0][1], _row[0][3]))
+						// state.removeId.push(_row[0][4], _row[1][4])
+						// state.newBlock.push(block(_row[0][0], _row[0][1], _row[0][3]))
 				} else if (_row[1][3] == _row[2][3]) {
 					_row[2][1] = "100px"
-					state.removeId.push(_row[1][4], _row[2][4])
-					state.newBlock.push(block(_row[1][0], _row[1][1], _row[1][3]))
+						// state.removeId.push(_row[1][4], _row[2][4])
+						// state.newBlock.push(block(_row[1][0], _row[1][1], _row[1][3]))
 				}
 				break
 			case 4:
@@ -210,24 +211,24 @@ function _up(state, row) {
 					_row[1][1] = "0px"
 					_row[2][1] = "100px"
 					_row[3][1] = "200px"
-					state.removeId.push(_row[0][4], _row[1][4])
-					state.newBlock.push(block(_row[0][0], _row[0][1], _row[0][3]))
+						// state.removeId.push(_row[0][4], _row[1][4])
+						// state.newBlock.push(block(_row[0][0], _row[0][1], _row[0][3]))
 
 					if (_row[2][3] == _row[3][3]) {
 						_row[2][1] = "100px"
 						_row[3][1] = "100px"
-						state.removeId.push(_row[2][4], _row[3][4])
-						state.newBlock.push(block(_row[2][0], _row[2][1], _row[2][3]))
+							// state.removeId.push(_row[2][4], _row[3][4])
+							// state.newBlock.push(block(_row[2][0], _row[2][1], _row[2][3]))
 					}
 				} else if (_row[1][3] == _row[2][3]) {
 					_row[2][1] = "100px"
 					_row[3][1] = "200px"
-					state.removeId.push(_row[1][4], _row[2][4])
-					state.newBlock.push(block(_row[1][0], _row[1][1], _row[1][3]))
+						// state.removeId.push(_row[1][4], _row[2][4])
+						// state.newBlock.push(block(_row[1][0], _row[1][1], _row[1][3]))
 				} else if (_row[2][3] == _row[3][3]) {
 					_row[3][1] = "200px"
-					state.removeId.push(_row[2][4], _row[3][4])
-					state.newBlock.push(block(_row[2][0], _row[2][1], _row[2][3]))
+						// state.removeId.push(_row[2][4], _row[3][4])
+						// state.newBlock.push(block(_row[2][0], _row[2][1], _row[2][3]))
 				}
 				break
 			default:
@@ -378,10 +379,12 @@ function mergeRight(state) {
 }
 
 function mergeUp(state) {
-	var data = state.data
+	var data = state
 	_up(state, _colSelect(data))
-	update(data)
+	data = update(data)
+	console.log("data : " + JSON.stringify(data))
 	console.log('mergeUp')
+	return data
 }
 
 function mergeDown(state) {

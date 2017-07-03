@@ -1,20 +1,40 @@
 import React, {
 	Component
 } from 'react'
+import {
+	connect
+} from 'react-redux'
+
 import './score.css'
 
-export default class Score extends Component {
+class Score extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			score: 1024
-		}
+	}
+	componentDidMount() {
+		console.log(this.props)
 	}
 	render() {
 		return (
 			<div className="score">
-				<p>SCORE : {this.state.score}</p>
+				<p>SCORE : {this.props.score}</p>
 			</div>
 		)
 	}
 }
+
+const mapStateToProps = (state) => {
+	return {
+		score: state.score
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		sum: () => dispatch({
+			type: 'SUM'
+		})
+	}
+}
+
+export default connect(mapStateToProps)(Score)
