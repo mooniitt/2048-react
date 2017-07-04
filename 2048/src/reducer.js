@@ -10,6 +10,10 @@ import {
 	randomBlock
 } from './direct'
 
+let removeId = [],
+	newBlock = [],
+	flag = true
+
 function score(state = 0, action) {
 	switch (action.type) {
 		case "SUM":
@@ -20,46 +24,37 @@ function score(state = 0, action) {
 }
 
 function data(state = [
-	["100px", "100px", "#873", 2, 1],
-	["100px", "0px", "#090", 2, 2]
+
 ], action) {
 	switch (action.type) {
 		case 'onUp':
-			return [...mergeUp(CURD(merge()))]
+			var state = mergeUp(merge())
+			return CURD(state)
 		case 'onDown':
-			return [...mergeDown(merge())]
+			var state = mergeDown(merge())
+			return CURD(state)
 		case 'onLeft':
-			return [...mergeLeft(merge())]
+			var state = mergeLeft(merge())
+			return CURD(state)
 		case 'onRight':
-			return [...mergeRight(merge())]
+			var state = mergeRight(merge())
+			return CURD(state)
+		case 'MERGE':
+			var block = [...newBlock]
+			return remove(removeId, block)
+		case 'RANDOM':
+			return [...randomBlock(state)]
+		case 'INIT':
+			return [...randomBlock(state)]
 		default:
 			return state
 	}
 }
 
-function removeId(state = [], action) {
-	switch (action.type) {
-		case "REMOVEID":
-			return state
-		default:
-			return state
-	}
-}
-
-function newBlock(state = [], action) {
-	switch (action.type) {
-		case "NEWBLOCK":
-			return state
-		default:
-			return state
-	}
-}
 
 const root = combineReducers({
 	score,
-	data,
-	removeId,
-	newBlock
+	data
 })
 
 const Store = createStore(root)
@@ -75,27 +70,39 @@ const sum = (data = Store.getState().data) => {
 const merge = (data = Store.getState()) => {
 	var state = {}
 	state.data = Store.getState().data
-	state.removeId = Store.getState().removeId
-	state.newBlock = Store.getState().newBlock
+	state.removeId = removeId
+	state.newBlock = newBlock
 	console.log("merge : " + JSON.stringify(state))
 	return state
 }
 
 const CURD = (state) => {
-	console.log(JSON.stringify(state))
-		// if (state['newBlock'].length) {
-		// 	var timerId = setTimeout(() => {
-		// 		Store.dispatch({
-		// 			type: "onUp"
-		// 		})
-		// 		clearTimeout(timerId)
-		// 	}, 2000)
-		// }
-	console.log(JSON.stringify(state))
-	return state
+	var data = state.data
+	console.log(JSON.stringify(data))
+	removeId = state.removeId
+	newBlock = state.newBlock
+	return [...data]
 }
 
-// console.log(merge())
+const remove = (id, newb, store = Store.getState().data) => {
+	if (id.length === 0) return store
+	var offset = []
+	store.forEach((item, index) => {
+		id.forEach(num => {
+			if (num === item[4]) {
+				offset.push(index)
+			}
+		})
+	})
+
+	offset.sort((prev, cur) => {
+		return cur - prev
+	}).forEach(item => {
+		store.splice(item, 1)
+	})
+	var block = [...store, ...newb]
+	id = [], newb = []
+	return block
+}
 
 export default Store
-// console.log(store.getState())

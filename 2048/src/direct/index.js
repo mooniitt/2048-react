@@ -368,24 +368,24 @@ function mergeLeft(state) {
 	var data = state.data
 	_left(state, _rowSelect(data))
 	update(data)
+	console.log("state : " + JSON.stringify(state))
 	console.log('mergeLeft')
-	return state.data
+	return state
 }
 
 function mergeRight(state) {
 	var data = state.data
 	_right(state, _rowSelect(data))
 	update(data)
+	console.log("state : " + JSON.stringify(state))
 	console.log('mergeRight')
-	return state.data
+	return state
 }
 
 function mergeUp(state) {
 	var data = state.data
-	console.log(data)
 	_up(state, _colSelect(data))
 	update(data)
-	console.log("data  : " + JSON.stringify(data))
 	console.log("state : " + JSON.stringify(state))
 	console.log('mergeUp')
 	return state
@@ -395,14 +395,15 @@ function mergeDown(state) {
 	var data = state.data
 	_down(state, _colSelect(data))
 	update(data)
+	console.log("state : " + JSON.stringify(state))
 	console.log('mergeDown')
-	return state.data
+	return state
 }
 
 function randomBlock(state) {
 	var arr = [],
 		tem = []
-	var data = state.data
+	var data = state
 	for (var i = 0; i < 16; i++) {
 		arr.push(i)
 	}
@@ -426,6 +427,7 @@ function randomBlock(state) {
 		data.splice(data.length, 1, b)
 	}
 	console.log(arr)
+	return data
 }
 
 function directMapNum(left, top) {

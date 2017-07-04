@@ -10,9 +10,21 @@ import {
 import './restart.css'
 
 class Restart extends Component {
+	constructor(props) {
+		super(props)
+		this.init = this.init.bind(this)
+	}
+	init() {
+		this.props.init()
+		this.props.score()
+	}
+	componentDidMount() {
+		console.log()
+		this.refs.button.click()
+	}
 	render() {
 		return (
-			<div className="btn" onClick={this.props.score}>
+			<div className="btn" ref='button' onClick={this.init}>
 				<p>RESTART</p>
 			</div>
 		)
@@ -24,13 +36,16 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-	const reducer = () => ({
+	const score = () => ({
 		type: "SUM"
 	})
-	let bind = bindActionCreators(reducer, dispatch)
+	const init = () => ({
+		type: "INIT"
+	})
 
 	return {
-		score: bind
+		score: bindActionCreators(score, dispatch),
+		init: bindActionCreators(init, dispatch)
 	}
 }
 

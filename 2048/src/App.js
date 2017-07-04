@@ -10,6 +10,13 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 		this.control = this.control.bind(this)
+		this.async = this.async.bind(this)
+	}
+	async() {
+		setTimeout(() => {
+			this.props.merge()
+			this.props.random()
+		}, 100)
 	}
 	control() {
 		document.addEventListener('keyup', (e) => {
@@ -17,26 +24,27 @@ class App extends Component {
 			switch (code) {
 				case 38: // 上
 				case 87:
+					this.async()
 					this.props.up()
 					console.log("up")
 					break
 				case 40: // 下
 				case 83:
+					this.async()
 					this.props.down()
 					console.log("down")
 					break
 				case 37: // 左
 				case 65:
+					this.async()
 					this.props.left()
 					console.log("left")
 					break
 				case 39: // 右
 				case 68:
+					this.async()
 					this.props.right()
 					console.log("right")
-					break
-				case 82:
-					console.log("restart")
 					break
 				default:
 					break
@@ -74,6 +82,12 @@ const mapDispatchToProps = (dispatch) => {
 		}),
 		score: () => dispatch({
 			type: 'SUM'
+		}),
+		merge: () => dispatch({
+			type: 'MERGE'
+		}),
+		random: () => dispatch({
+			type: "RANDOM"
 		})
 	}
 }
