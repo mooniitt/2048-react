@@ -45,6 +45,7 @@ function data(state = [
 		case 'RANDOM':
 			return [...randomBlock(state)]
 		case 'INIT':
+			state = []
 			return [...randomBlock(state)]
 		default:
 			return state
